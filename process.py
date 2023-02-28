@@ -21,11 +21,12 @@ for x in tqdm(files, total=len(files)):
         page_content = pdf_file[page_num]
         images_list.extend(page_content.get_images())
     for i, img in enumerate(images_list, start=1):
+        cur_nr =  f"{i:0>3}"
         xref = img[0]
         base_image = pdf_file.extract_image(xref)
         image_bytes = base_image['image']
         image_ext = base_image['ext']
-        image_name = f"{tail.replace('.pdf', '')}__{i}.{image_ext}"
+        image_name = f"{tail.replace('.pdf', '')}__{cur_nr}.{image_ext}"
         with open(os.path.join(new_folder, image_name) , 'wb') as image_file:
             image_file.write(image_bytes)
             image_file.close()
